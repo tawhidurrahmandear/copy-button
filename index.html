@@ -1,0 +1,63 @@
+<div id="Item1">
+<p style="padding: 5px; text-align: justify;">This is an example text to copy : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <span style="color: red;">This sentence is Red. </span><strong>This sentence is bold</strong>. <span style="text-decoration: underline;">This sentence is underlined</span>. <em>This sentence is italic</em>. <span style="text-decoration: line-through;">This sentence is Strikethrough</span>. Sem et tortor consequat id porta nibh venenatis cras.</p>
+<hr />
+<ul>
+<li style="padding: 5px; text-align: justify;">Rupnagar, Mirpur, Dhaka</li>
+<li style="padding: 5px; text-align: justify;"><span style="background-color: yellow;">Chittagong</span></li>
+<li style="padding: 5px; text-align: justify;">😎</li>
+<li style="padding: 5px; text-align: justify;">আমার মাতৃভাষা বাংলা</li>
+<li style="padding: 5px; text-align: justify;">Calcutta</li>
+</ul>
+<p style="padding: 5px; text-align: justify;">This code is developed by <a title="Tawhidur Rahman Dear" href="https://www.tawhidurrahmandear.com/" target="_blank" rel="noopener">Tawhidur Rahman Dear</a>.</p>
+</div>
+
+<p><button type="button" id="CopyButton1">Copy Text</button></p>
+
+<br>
+
+<div id="Item2" style="color: green; font-size: 14px;">
+    <p>Another Text</p>
+    <p>With different type of formatting.</p>
+</div>
+<p><button type="button" id="CopyButton2">Copy Text</button></p>
+
+<script>
+// Copy button for div
+// developed by Tawhidur Rahman Dear, https://www.tawhidurrahmandear.com
+function copyWithFormatting(elementId, buttonId) {
+    const div = document.getElementById(elementId);
+    const button = document.getElementById(buttonId);
+
+    if (div) {
+        // Get the HTML content with styling
+        const htmlToCopy = div.outerHTML;
+        const plainText = div.innerText; // Fallback plain text
+        
+        // Create ClipboardItem for rich text and plain text
+        const clipboardItem = new ClipboardItem({
+            'text/html': new Blob([htmlToCopy], { type: 'text/html' }),
+            'text/plain': new Blob([plainText], { type: 'text/plain' })
+        });
+
+        navigator.clipboard.write([clipboardItem]).then(() => {
+            // Success: Change button text to "Successfully copied"
+            button.textContent = 'Successfully copied!';
+            setTimeout(() => {
+                // Revert button text after 5 seconds
+                button.textContent = 'Copy again ...';
+            }, 5000);
+        }).catch(() => {
+            // Error: Show "Copy again ..." immediately
+            button.textContent = 'Copy again ...';
+        });
+    }
+}
+
+document.getElementById('CopyButton1').addEventListener('click', () => {
+    copyWithFormatting('Item1', 'CopyButton1');
+});
+
+document.getElementById('CopyButton2').addEventListener('click', () => {
+    copyWithFormatting('Item2', 'CopyButton2');
+});
+</script>
